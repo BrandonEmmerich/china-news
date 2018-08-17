@@ -1,4 +1,0 @@
-
-Things to Do
-    + Get more data... Right now I have repeats?
-    + Concatenate the end of the url so that there is a clickable url to visit 

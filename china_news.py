@@ -5,9 +5,9 @@ import pandas as pd
 
 empty_list = []
 
-for i in range(1,10):
+for i in range(1,6):
     print i
-    url = 'https://www.yicai.com/api/ajax/getjuhelist?action=news&page={}&pagesize=100'.format(i)
+    url = 'https://www.yicai.com/api/ajax/getjuhelist?action=news&page={}&pagesize=1000'.format(i)
     res = requests.get(url)
     df = pd.DataFrame(res.json())
     df_clean = df[['CreateDate','url','NewsTitle','NewsNotes']]
@@ -31,5 +31,7 @@ def _find_keyword(input_string):
     return status
 
 df_match = df[df['NewsNotes'].map(_find_keyword) |df['NewsTitle'].map(_find_keyword) ]
+df_match = df_match.drop_duplicates()
+df_match['url'] = 'https://www.yicai.com' + df_match['url']
 
-import ipdb; ipdb.set_trace()
+df_match.to_csv('./data/20180816_news_defaults.csv', encoding ='utf-8')
